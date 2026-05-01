@@ -1,0 +1,10 @@
+[
+  {
+    "timestamp": "2026-05-01 16:21:20",
+    "source": "pdf",
+    "file_name": "Rapport_PCA.pdf.pdf",
+    "input_length": 5829,
+    "summary_length": 734,
+    "summary_preview": "Principal component analysis (PCA) is a dimensionality reduction technique widely used in data analysis . It transforms a set of possibly correlated variables into a smaller number of uncorrelated variables called principal components . In this proje..."
+  }
+]
