@@ -553,7 +553,7 @@ def render_history():
 
     pdf_history = [entry for entry in history if entry.get("source") == "pdf"]
     if pdf_history:
-        st.markdown("<h3 style='color:#fbcfe8; font-family:Quicksand,sans-serif;'>📄🎀 Summarized PDFs</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color:#6d28d9; font-family:Quicksand,sans-serif;'>📄🎀 Summarized PDFs</h3>", unsafe_allow_html=True)
         table_data = [
             {
                 "Timestamp": entry["timestamp"],
@@ -576,7 +576,7 @@ def render_history():
 
     text_history = [entry for entry in history if entry.get("source") == "text"]
     if text_history:
-        st.markdown("<h3 style='color:#fbcfe8;margin-top:1.4rem; font-family:Quicksand,sans-serif;'>✍️🌷 Other Summaries</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color:#6d28d9;margin-top:1.4rem; font-family:Quicksand,sans-serif;'>✍️🌷 Other Summaries</h3>", unsafe_allow_html=True)
         for entry in text_history[:8]:
             with st.expander(f"Text summary • {entry['timestamp']}"):
                 st.markdown("**Summary preview:** " + entry.get("summary_preview", "-"))
@@ -664,9 +664,9 @@ with stats_tab:
 
 st.markdown("---")
 st.markdown("""
-<p style="text-align:center; font-family:'Quicksand',sans-serif; color:#fbcfe8; font-size:0.95rem; padding-bottom:1.5rem;">
-  🌸 Made with love using <strong style="color:#f472b6;">Streamlit</strong>
-  &nbsp;·&nbsp; 🧠 Fine-tuned <strong style="color:#c084fc;">BART</strong>
+<p style="text-align:center; font-family:'Quicksand',sans-serif; color:#6d28d9; font-size:0.95rem; padding-bottom:1.5rem;">
+  🌸 Made with love using <strong style="color:#be185d;">Streamlit</strong>
+  &nbsp;·&nbsp; 🧠 Fine-tuned <strong style="color:#7c3aed;">BART</strong>
   &nbsp;·&nbsp; 🤗 HuggingFace Transformers &nbsp;·&nbsp; ✨🎀💜
 </p>
 """, unsafe_allow_html=True)
