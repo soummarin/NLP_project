@@ -6,3 +6,4 @@ fpdf2>=2.7.0
 PyPDF2>=3.0.0
 sentencepiece
 accelerate
+plotly>=5.0.0

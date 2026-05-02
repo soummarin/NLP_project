@@ -610,18 +610,48 @@ def render_statistics():
     stats_col3.metric("Avg summary ratio", f"{avg_ratio}")
 
     st.markdown("---")
-    st.markdown("**Summary source distribution**")
-    st.bar_chart({"PDF": pdf_count, "Text": text_count})
+    st.markdown("""
+    <p style='color:#6d28d9; font-size:1.05rem; font-weight:700; margin-bottom:0.3rem;'>
+      📈 Summary source distribution
+    </p>
+    """, unsafe_allow_html=True)
+
+    import plotly.graph_objects as go
+    fig = go.Figure(data=[
+        go.Bar(
+            x=["PDF 📄", "Text ✍️"],
+            y=[pdf_count, text_count],
+            marker_color=["#e879a0", "#a855f7"],
+            text=[pdf_count, text_count],
+            textposition="outside",
+            textfont=dict(size=16, color="#4c1d95", family="Quicksand"),
+        )
+    ])
+    fig.update_layout(
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(255,240,246,0.5)",
+        font=dict(family="Quicksand", color="#4c1d95", size=14),
+        yaxis=dict(gridcolor="#f9a8d4", tickfont=dict(color="#6d28d9")),
+        xaxis=dict(tickfont=dict(color="#6d28d9", size=15)),
+        margin=dict(l=20, r=20, t=20, b=20),
+        height=300,
+        showlegend=False,
+    )
+    st.plotly_chart(fig, use_container_width=True)
 
     st.markdown("---")
-    st.markdown("<p style='color:#fbcfe8; font-weight:700; font-size:1rem;'>🕐 Recent Summaries</p>", unsafe_allow_html=True)
+    st.markdown("""
+    <p style='color:#6d28d9; font-size:1.05rem; font-weight:700; margin-bottom:0.5rem;'>
+      🕐 Recent Summaries
+    </p>
+    """, unsafe_allow_html=True)
     for entry in history[:5]:
-        label = entry.get("file_name") if entry.get("file_name") and entry.get("file_name") != "-" else f"Text summary"
-        with st.expander(f'{label} • {entry["timestamp"]}'):
-            st.write(f"Input length: {entry['input_length']} chars")
-            st.write(f"Summary length: {entry['summary_length']} chars")
-            st.write(f"Source: {entry['source'].upper()}")
-            st.write(entry.get("summary_preview", "-"))
+        label = entry.get("file_name") if entry.get("file_name") and entry.get("file_name") != "-" else "Text summary"
+        with st.expander(f"📄 {label}  •  {entry['timestamp']}"):
+            st.markdown(f"**📝 Input:** `{entry['input_length']}` chars")
+            st.markdown(f"**✨ Summary:** `{entry['summary_length']}` chars")
+            st.markdown(f"**📂 Source:** `{entry['source'].upper()}`")
+            st.markdown(f"> {entry.get('summary_preview', '-')}")
 
 
 home_tab, history_tab, stats_tab = st.tabs(["🏠 Home", "🗂️ History", "📊 Stats"])
