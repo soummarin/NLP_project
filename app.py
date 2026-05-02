@@ -23,22 +23,20 @@ import streamlit as st
 
 # ── Page config ──────────────────────────────────────────────
 st.set_page_config(
-    page_title="BART Summarizer",
-    page_icon="📝",
+    page_title="✨ BART Summarizer 🌸",
+    page_icon="🌸",
     layout="wide",
     initial_sidebar_state="collapsed",
 )
-
-# ── Custom CSS ───────────────────────────────────────────────
 st.markdown("""
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
 
-  html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+  html, body, [class*="css"] { font-family: 'Quicksand', sans-serif; }
 
-  /* ── Global background ── */
+  /* ── Global background — bright airy white-pink ── */
   .stApp {
-    background: linear-gradient(135deg, #0f0c29 0%, #1a1a4e 45%, #0d2137 100%);
+    background: linear-gradient(160deg, #fff0f6 0%, #fdf4ff 40%, #f0f4ff 100%);
     min-height: 100vh;
   }
 
@@ -48,128 +46,163 @@ st.markdown("""
   /* ── Hero ── */
   .hero {
     text-align: center;
-    padding: 2.8rem 1rem 2rem;
+    padding: 3rem 1rem 2rem;
     animation: fadeDown 0.8s ease;
   }
   .hero h1 {
-    font-size: 2.9rem;
+    font-size: 3.5rem;
     font-weight: 700;
-    color: #7b2ff7;
+    background: linear-gradient(to right, #e11d74, #9333ea, #4f46e5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 0.5rem;
+    letter-spacing: -1px;
   }
   .hero p {
-    color: #a0aec0;
-    font-size: 1.05rem;
+    color: #5b21b6;
+    font-size: 1.2rem;
+    font-weight: 600;
     max-width: 640px;
     margin: 0 auto;
   }
 
   /* ── Section label ── */
   .section-label {
-    font-size: 0.78rem;
-    font-weight: 600;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    color: #7b2ff7;
-    margin-bottom: 0.6rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #7c3aed;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 
   /* ── Summary output box ── */
   .summary-box {
-    background: rgba(0,210,255,0.07);
-    border: 1px solid rgba(0,210,255,0.25);
-    border-radius: 14px;
-    padding: 1.4rem 1.6rem;
-    color: #e2e8f0;
-    font-size: 1rem;
-    line-height: 1.8;
+    background: #ffffff;
+    border: 2px solid #f9a8d4;
+    border-radius: 20px;
+    padding: 1.8rem 2rem;
+    color: #1e1b4b;
+    font-size: 1.1rem;
+    line-height: 1.9;
     white-space: pre-wrap;
     animation: fadeIn 0.9s ease;
+    box-shadow: 0 8px 30px rgba(233, 70, 150, 0.12);
   }
 
   /* ── Placeholder text (waiting state) ── */
   .placeholder-text {
-    color: #4a5568;
+    color: #a855f7;
     font-style: italic;
+    font-weight: 600;
     text-align: center;
     padding: 3rem 1rem;
-    border: 1px dashed rgba(255,255,255,0.1);
-    border-radius: 14px;
+    border: 2px dashed #f0abfc;
+    border-radius: 20px;
+    background: rgba(249, 168, 212, 0.07);
   }
 
   /* ── Primary button ── */
   .stButton > button {
-    background: linear-gradient(135deg, #7b2ff7, #00d2ff);
+    background: linear-gradient(135deg, #e879a0, #a855f7, #6366f1);
+    background-size: 200% auto;
     color: white !important;
     border: none;
-    border-radius: 10px;
-    padding: 0.7rem 1.4rem;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: transform 0.18s, box-shadow 0.18s, opacity 0.18s;
-    box-shadow: 0 4px 20px rgba(123,47,247,0.45);
+    border-radius: 50px;
+    padding: 0.8rem 2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
     width: 100%;
   }
   .stButton > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(123,47,247,0.62);
-    opacity: 0.92;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(168, 85, 247, 0.55);
   }
-  .stButton > button:active { transform: translateY(0); }
+  .stButton > button:active { transform: translateY(1px); }
 
   /* ── Download button ── */
   .stDownloadButton > button {
-    background: linear-gradient(135deg, #11998e, #38ef7d) !important;
-    color: #0f0c29 !important;
+    background: linear-gradient(135deg, #34d399, #059669) !important;
+    color: white !important;
     border: none !important;
-    border-radius: 10px;
-    padding: 0.7rem 1.4rem;
-    font-size: 1rem;
+    border-radius: 50px;
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     width: 100%;
-    transition: transform 0.18s, box-shadow 0.18s;
-    box-shadow: 0 4px 20px rgba(56,239,125,0.38);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(5, 150, 105, 0.3);
   }
   .stDownloadButton > button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 28px rgba(56,239,125,0.55) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(5, 150, 105, 0.5) !important;
   }
 
   /* ── Labels ── */
-  label { color: #cbd5e0 !important; font-weight: 500 !important; }
+  label { color: #4c1d95 !important; font-weight: 600 !important; font-size: 1rem !important; }
 
-  /* ── Text area — bright/light background ── */
+  /* ── Text area ── */
   .stTextArea textarea {
-    background: rgba(255,255,255,0.88) !important;
-    border: 1px solid rgba(123,47,247,0.4) !important;
-    border-radius: 10px !important;
-    color: #1a1a2e !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 0.95rem !important;
+    background: #ffffff !important;
+    border: 2px solid #f0abfc !important;
+    border-radius: 16px !important;
+    color: #1e1b4b !important;
+    font-family: 'Quicksand', sans-serif !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
   }
-  .stTextArea textarea::placeholder { color: #6b7280 !important; }
+  .stTextArea textarea::placeholder { color: #c084fc !important; }
   .stTextArea textarea:focus {
-    border-color: rgba(0,210,255,0.6) !important;
-    box-shadow: 0 0 0 2px rgba(0,210,255,0.15) !important;
+    border-color: #a855f7 !important;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.2) !important;
   }
 
   /* ── File uploader ── */
   [data-testid="stFileUploader"] {
-    background: rgba(255,255,255,0.06) !important;
-    border: 2px dashed rgba(123,47,247,0.5) !important;
-    border-radius: 12px !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+    border: 2px dashed #f9a8d4 !important;
+    border-radius: 16px !important;
+    transition: all 0.3s ease;
+  }
+  [data-testid="stFileUploader"]:hover {
+    background: #fff0f6 !important;
+    border-color: #e879a0 !important;
   }
 
   /* ── Radio ── */
-  .stRadio label { color: #a0aec0 !important; }
+  .stRadio label { color: #6d28d9 !important; font-weight: 600 !important; }
 
   /* ── Divider ── */
-  hr { border-color: rgba(255,255,255,0.09) !important; margin: 1.5rem 0 !important; }
+  hr { border-color: #f9a8d4 !important; margin: 2rem 0 !important; }
+
+  /* ── Metrics ── */
+  [data-testid="stMetricValue"] { color: #6d28d9 !important; font-weight: 700 !important; }
+  [data-testid="stMetricLabel"]  { color: #7c3aed !important; }
+
+  /* ── Tabs ── */
+  .stTabs [data-baseweb="tab-list"] { gap: 24px; background: transparent; }
+  .stTabs [data-baseweb="tab"] {
+    height: 50px;
+    background-color: transparent;
+    border-radius: 4px 4px 0 0;
+    color: #7c3aed;
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+  .stTabs [aria-selected="true"] {
+    color: #be185d !important;
+    border-bottom-color: #be185d !important;
+  }
+
+  /* ── Expander ── */
+  .streamlit-expanderHeader { color: #6d28d9 !important; font-weight: 600 !important; }
 
   /* ── Keyframes ── */
-  @keyframes fadeIn   { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
-  @keyframes fadeDown { from { opacity:0; transform:translateY(-16px);} to { opacity:1; transform:translateY(0); } }
-  @keyframes shine    { to   { background-position: 200% center; } }
+  @keyframes fadeIn   { from { opacity:0; transform:translateY(15px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-20px);} to { opacity:1; transform:translateY(0); } }
 </style>
 """, unsafe_allow_html=True)
 
@@ -212,9 +245,9 @@ def render_home(tokenizer, model, device):
     # ── Hero ─────────────────────────────────────────────────────
     st.markdown("""
     <div class="hero">
-      <h1>✦ BART Summarizer</h1>
-      <p>Upload a PDF or paste your text and get an AI-powered summary
-         generated by a fine-tuned BART model.</p>
+      <h1>🌸 BART Summarizer ✨</h1>
+      <p>🪄 Drop a PDF or paste your text and watch AI magic happen ~<br>
+         <span style='font-size:0.9rem; opacity:0.8;'>Powered by a fine-tuned BART model 🧠💜</span></p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -224,7 +257,7 @@ def render_home(tokenizer, model, device):
     up_col, txt_col = st.columns([1, 1], gap="large")
 
     with up_col:
-        st.markdown('<p class="section-label">📄 Upload a PDF</p>', unsafe_allow_html=True)
+        st.markdown('<p class="section-label">📄🎀 Drop a PDF here</p>', unsafe_allow_html=True)
         uploaded_file = st.file_uploader(
             label="drop pdf here",
             type=["pdf"],
@@ -232,11 +265,11 @@ def render_home(tokenizer, model, device):
         )
 
     with txt_col:
-        st.markdown('<p class="section-label">✏️ Or paste / type text</p>', unsafe_allow_html=True)
+        st.markdown('<p class="section-label">✍️🌷 Or paste your text</p>', unsafe_allow_html=True)
         user_text = st.text_area(
             label="paste text",
             height=220,
-            placeholder="Paste any article, report, or document text here …",
+            placeholder="✨ Paste any article, paper, or document here and let the magic begin ~",
             label_visibility="collapsed",
         )
 
@@ -253,15 +286,15 @@ def render_home(tokenizer, model, device):
 
     _, btn_col, _ = st.columns([1, 2, 1])
     with btn_col:
-        run_btn = st.button("✨  Generate Summary", use_container_width=True)
+        run_btn = st.button("🪄✨  Generate Summary  ✨🪄", use_container_width=True)
 
     st.markdown("---")
 
-    st.markdown('<p class="section-label">💡 Summary Output</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-label">💌 Your Summary ~</p>', unsafe_allow_html=True)
     output_area = st.empty()
     download_area = st.empty()
     output_area.markdown(
-        '<div class="placeholder-text">Your summary will appear here after you click Generate.</div>',
+        '<div class="placeholder-text">🌸 Your magical summary will appear here ~<br><span style="font-size:0.85rem;">Click the button above to get started! ✨</span></div>',
         unsafe_allow_html=True,
     )
 
@@ -328,9 +361,9 @@ def render_home(tokenizer, model, device):
 
 @st.cache_resource(show_spinner=False)
 def load_model():
-    from transformers import BartTokenizer, BartForConditionalGeneration
-    tokenizer = BartTokenizer.from_pretrained(MODEL_REPO)
-    model     = BartForConditionalGeneration.from_pretrained(MODEL_REPO)
+    from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_REPO)
+    model     = AutoModelForSeq2SeqLM.from_pretrained(MODEL_REPO)
     device    = "cuda" if torch.cuda.is_available() else "cpu"
     model.to(device)
     model.eval()
@@ -511,7 +544,7 @@ with st.spinner("Loading fine-tuned BART model — please wait …"):
 
 
 def render_history():
-    st.markdown('<p class="section-label">🗂️ Summary History</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-label">🗂️✨ Your Summary Archive</p>', unsafe_allow_html=True)
     history = load_history()
 
     if not history:
@@ -520,7 +553,7 @@ def render_history():
 
     pdf_history = [entry for entry in history if entry.get("source") == "pdf"]
     if pdf_history:
-        st.markdown("<h3 style='color:#e2e8f0;'>Previously Summarized PDFs</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color:#fbcfe8; font-family:Quicksand,sans-serif;'>📄🎀 Summarized PDFs</h3>", unsafe_allow_html=True)
         table_data = [
             {
                 "Timestamp": entry["timestamp"],
@@ -543,7 +576,7 @@ def render_history():
 
     text_history = [entry for entry in history if entry.get("source") == "text"]
     if text_history:
-        st.markdown("<h3 style='color:#e2e8f0;margin-top:1.4rem;'>Other Past Summaries</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='color:#fbcfe8;margin-top:1.4rem; font-family:Quicksand,sans-serif;'>✍️🌷 Other Summaries</h3>", unsafe_allow_html=True)
         for entry in text_history[:8]:
             with st.expander(f"Text summary • {entry['timestamp']}"):
                 st.markdown("**Summary preview:** " + entry.get("summary_preview", "-"))
@@ -552,7 +585,7 @@ def render_history():
 
 
 def render_statistics():
-    st.markdown('<p class="section-label">📊 Summary Statistics</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-label">📊🌸 Stats & Insights</p>', unsafe_allow_html=True)
     history = load_history()
 
     if not history:
@@ -581,7 +614,7 @@ def render_statistics():
     st.bar_chart({"PDF": pdf_count, "Text": text_count})
 
     st.markdown("---")
-    st.markdown("**Recent summaries**")
+    st.markdown("<p style='color:#fbcfe8; font-weight:700; font-size:1rem;'>🕐 Recent Summaries</p>", unsafe_allow_html=True)
     for entry in history[:5]:
         label = entry.get("file_name") if entry.get("file_name") and entry.get("file_name") != "-" else f"Text summary"
         with st.expander(f'{label} • {entry["timestamp"]}'):
@@ -591,7 +624,7 @@ def render_statistics():
             st.write(entry.get("summary_preview", "-"))
 
 
-home_tab, history_tab, stats_tab = st.tabs(["Home", "History", "Statistics"])
+home_tab, history_tab, stats_tab = st.tabs(["🏠 Home", "🗂️ History", "📊 Stats"])
 with home_tab:
     render_home(tokenizer, model, device)
 with history_tab:
@@ -601,9 +634,9 @@ with stats_tab:
 
 st.markdown("---")
 st.markdown("""
-<p style="text-align:center; color:#4a5568; font-size:0.8rem; padding-bottom:1.5rem;">
-  Built with ❤️ using <strong style="color:#7b2ff7;">Streamlit</strong>
-  &nbsp;·&nbsp; Fine-tuned <strong style="color:#00d2ff;">BART</strong>
-  &nbsp;·&nbsp; HuggingFace Transformers
+<p style="text-align:center; font-family:'Quicksand',sans-serif; color:#fbcfe8; font-size:0.95rem; padding-bottom:1.5rem;">
+  🌸 Made with love using <strong style="color:#f472b6;">Streamlit</strong>
+  &nbsp;·&nbsp; 🧠 Fine-tuned <strong style="color:#c084fc;">BART</strong>
+  &nbsp;·&nbsp; 🤗 HuggingFace Transformers &nbsp;·&nbsp; ✨🎀💜
 </p>
 """, unsafe_allow_html=True)
