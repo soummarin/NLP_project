@@ -1,5 +1,13 @@
 [
   {
+    "timestamp": "2026-05-02 13:05:41",
+    "source": "pdf",
+    "file_name": "machine_learning_basics.pdf",
+    "input_length": 2060,
+    "summary_length": 370,
+    "summary_preview": "Machine Learning is a field of artificial intelligence that allows computers to learn from data without being explicitly programmed . Instead of following fixed rules, machine learning systems analyze patterns in data and improve their performance ov..."
+  },
+  {
     "timestamp": "2026-05-01 16:21:20",
     "source": "pdf",
     "file_name": "Rapport_PCA.pdf.pdf",

@@ -656,7 +656,10 @@ def render_statistics():
 
 home_tab, history_tab, stats_tab = st.tabs(["🏠 Home", "🗂️ History", "📊 Stats"])
 with home_tab:
-    render_home(tokenizer, model, device)
+    if model_loaded:
+        render_home(tokenizer, model, device)
+    else:
+        render_home(None, None, None)
 with history_tab:
     render_history()
 with stats_tab:
